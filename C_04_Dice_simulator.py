@@ -10,7 +10,9 @@ def roll_die():
 
 # Main Routine starts here
 
-for item in range(0,10):
+how_many = int(input("How many dice?: "))
+
+for item in range(0, 5):
     user_score = 0
     double_score = "No"
 
@@ -29,4 +31,3 @@ for item in range(0,10):
     print(f"Die 1: {roll_1} \t Die 2: {roll_2} \t Points: {user_points}")
     print(f"Double score opportunity: {double_score}")
     print()
-
