@@ -64,10 +64,22 @@ while computer_points < 13 and user_points < 13:
     if roll_again == "yes":
         user_move = roll_die()
         user_points += user_move
-        print(f"You rolled a {user_move}.  You now have {user_points} points.")
 
-    print("\nPress <enter> to continue...")
-    input()
+
+    # If user goes over 13 points, tell them that they lose and set points to 0
+    if user_points > 13:
+        print(f"Oops! You rolled a {user_points} so your total is {user_points}."
+              f"Which is over 13 points so you lose this round and "
+              f"don't get any points added to your total score.")
+
+        # reset user points to zero so that when we update their
+        # score at the end of round it is correct.
+        user_points = 0
+
+        break
+
+    # print("\nPress <enter> to continue...")
+    # input()
 
     # Roll die for computer and update computer points
     computer_move = roll_die()
