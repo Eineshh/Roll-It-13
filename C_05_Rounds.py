@@ -4,13 +4,13 @@ import random
 # generates an integer between 0 and 6
 # to simulate a roll of die
 def roll_die():
-    result = random.randint(1, 6)
-    return result
+    roll_result = random.randint(1, 6)
+    return roll_result
 
 
 # rolls two dice and returns total whether we
 # had a double roll
-def two_rolls():
+def two_rolls(who):
     double_score = "no"
 
     # roll two dice
@@ -22,12 +22,12 @@ def two_rolls():
         double_score = "Yes"
 
     # Find the total points (so far)
-    user_points = roll_1 + roll_2
+    first_points = roll_1 + roll_2
 
     # Show the user the result
-    print(f"Die 1: {roll_1} \t Die 2: {roll_2}")
+    print(f"{who}: {roll_1} & {roll_2} - Total: {first_points}")
 
-    return user_points, double_score
+    return first_points, double_score
 
 
 # Main Routine starts here
@@ -35,28 +35,23 @@ print("Press <enter> to begin this round: ")
 input()
 
 # Get initial dice rolls for user
-user_first = two_rolls()
+user_first = two_rolls("User")
 user_points = user_first[0]
 double_points = user_first[1]
 
 # Tell the user if they are eligible for double points
-if double_points == "no":
-    double_feedback = ""
-else:
-    double_feedback = "If you win this round, you gain double points!"
-
-# output initial move results
-print(f"You rolled a total of {user_points},  {double_feedback}")
-print()
+if double_points == "yes":
+    print("If you win this round, you gain double points! ✨")
 
 # Get initial dice rolls for computer
-computer_first = two_rolls()
+computer_first = two_rolls("Computer")
 computer_points = computer_first[0]
 
-print(f"The computer rolled a total of {computer_points}.")
+# print(f"The computer rolled a total of {computer_points}.")
 
 # Loop (while both user / computer have <= 13 points)...
 while computer_points < 13 and user_points < 13:
+
     # ask user if they want to roll again, update
     # points / status
     print()
@@ -65,33 +60,44 @@ while computer_points < 13 and user_points < 13:
         user_move = roll_die()
         user_points += user_move
 
+        # If user goes over 13 points, tell them that they lose and set points to 0
+        if user_points > 13:
+            print(f"💥💥💥 Oops! You rolled a {user_points} so your total is {user_points}."
+                  f"Which is over 13 points. 💥💥💥")
 
-    # If user goes over 13 points, tell them that they lose and set points to 0
-    if user_points > 13:
-        print(f"Oops! You rolled a {user_points} so your total is {user_points}."
-              f"Which is over 13 points so you lose this round and "
-              f"don't get any points added to your total score.")
+            # reset user points to zero so that when we update their
+            # score at the end of round it is correct.
+            user_points = 0
 
-        # reset user points to zero so that when we update their
-        # score at the end of round it is correct.
-        user_points = 0
+            break
 
-        break
-
-    # print("\nPress <enter> to continue...")
-    # input()
+        else:
+            print(f"You rolled a {user_move} and have a total score of {user_points}.")
 
     # Roll die for computer and update computer points
     computer_move = roll_die()
     computer_points += computer_move
-    print(f"The computer rolled a {computer_move}.  The computer"
-          f" now has {computer_points}.")
+
+    # check computer has not gone over...
+    if computer_points > 13:
+        print()
+        print(f"💥💥💥 The computer rolled a {computer_move}, taking their points"
+              f" to {computer_points}. This is over 13 points so the computer loses! 💥💥💥")
+        computer_points = 0
+        break
+
+    else:
+        print(f"The computer rolled a {computer_move}. The computer"
+              f" now has {computer_points}.")
 
     print()
+    # Tell user is they are winning, loosing or are in a tie
     if user_points > computer_points:
         result = "You are ahead!"
-    else:
+    elif user_points < computer_points:
         result = "The computer is ahead!"
+    else:
+        result = "It's currently a tie."
 
     print(f"⟡⟡⟡ Round Update ⟡⟡⟡: {result} ")
     print(f"User Score: {user_points} \t | \t Computer Score: {computer_points}")
@@ -100,11 +106,13 @@ while computer_points < 13 and user_points < 13:
 
 # Show rounds result
 if user_points < computer_points:
+    print()
     print("Sorry - You lost this round and no points "
           "were added to your total score. The computer's score has "
           f"increased by {computer_points} points.")
 
 # currently does not include double points!
 else:
+    print()
     print(f"Yay! You won the round and {user_points} points have "
-          f"been added to your score")
+          f"been added to your score 😻😻")
