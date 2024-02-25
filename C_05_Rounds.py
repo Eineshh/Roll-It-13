@@ -93,26 +93,32 @@ while computer_points < 13 and user_points < 13:
     print()
     # Tell user is they are winning, loosing or are in a tie
     if user_points > computer_points:
-        result = "You are ahead!"
+        result = "🎉🎉🎉 You are ahead! 🎉🎉🎉"
     elif user_points < computer_points:
-        result = "The computer is ahead!"
+        result = "😮 The computer is ahead! 😮"
     else:
         result = "It's currently a tie."
 
     print(f"⟡⟡⟡ Round Update ⟡⟡⟡: {result} ")
     print(f"User Score: {user_points} \t | \t Computer Score: {computer_points}")
 
-# Outside loop - doubler user points if they won and are eligible
+# Outside loop - double user points if they won and are eligible
 
 # Show rounds result
+print()
+
 if user_points < computer_points:
     print()
-    print("Sorry - You lost this round and no points "
+    print("😔 Sorry - You lost this round and no points "
           "were added to your total score. The computer's score has "
-          f"increased by {computer_points} points.")
+          f"increased by {computer_points} points. 😔")
 
 # currently does not include double points!
 else:
+    # Doubles user points if they are eligible
+    if double_points == "yes":
+        user_points *= 2
+
     print()
-    print(f"Yay! You won the round and {user_points} points have "
+    print(f"😻😻 Yay! You won the round and {user_points} points have "
           f"been added to your score 😻😻")
