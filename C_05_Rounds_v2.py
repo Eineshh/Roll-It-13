@@ -147,4 +147,4 @@ elif user_points > computer_points:
 
 else:
     print(f"◇◇ The result for this round is a tie. You and the computer"
-          f"both have {user_points}. ◇◇")
+          f"both have {user_points} points. ◇◇")
