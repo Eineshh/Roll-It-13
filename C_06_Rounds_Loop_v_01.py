@@ -1,4 +1,3 @@
-
 # Checks that users enter an integer
 # that is more than 13
 def int_check(question):
