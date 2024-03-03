@@ -85,7 +85,7 @@ while user_score < target_score and comp_score < target_score:
 
     # Tell the user if they are eligible for double points
     if double_points == "yes":
-        print("If you win this round, you gain double points! ✨")
+        print("✨ If you win this round, you gain double points! ✨")
 
     # Get initial dice rolls for computer
     computer_first = two_rolls("Computer")
@@ -95,6 +95,9 @@ while user_score < target_score and comp_score < target_score:
 
     # Loop (while both user / computer have <= 13 points)...
     while computer_points <= 13 and user_points <= 13:
+
+        # ask user if they want to roll again, update
+        # points / status
 
         # If user has 13 points, we can assume they don't want to roll again!
         if user_points == 13:
@@ -209,7 +212,7 @@ while user_score < target_score and comp_score < target_score:
 
     # if the user wins, add their points to their score
     elif user_points > computer_points:
-        user_score += add_points
+        user_score += user_points
 
     # if it's a tie, add the point to BOTH SCORES
     else:
