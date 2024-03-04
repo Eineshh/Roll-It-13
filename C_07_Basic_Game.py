@@ -102,7 +102,7 @@ while user_score < target_score and comp_score < target_score:
         # If user has 13 points, we can assume they don't want to roll again!
         if user_points == 13:
             user_pass = "yes"
-
+5
         # ask user if they want to roll again, update
         # points / status
         print()
