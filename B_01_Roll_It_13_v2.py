@@ -1,6 +1,43 @@
 import random
 
 
+# checks users enter yes (y) or no (n)
+def yes_no(question):
+    while True:
+        print()
+        response = input(question).lower()
+
+        # checks user response, question
+        # repeats if users don't enter yes / no
+        if response == "yes" or response == "y":
+            return "yes"
+        elif response == "no" or response == "n":
+            return "no"
+        else:
+            print("Please enter Yes / No")
+
+
+# Displays instructions to user
+def instruction():
+    print('''
+
+✦✦✦ Instructions ✦✦✦
+
+First off, you choose a scoring objective (e.g. The first player to score 50 points or more). 
+
+Next, you roll a die to determine how many points you earn for each round. 
+
+The player who comes closest to 13 wins the round. 
+
+If you roll a double on your first roll, you obtain double the amount of points (6 X 2 = 12). If you win the round, 
+your score will grow by the number you earned
+
+You receive zero points if you lose the round. 
+
+In a tie, the number of bonus points awarded to each player is the same.  
+    ''')
+
+
 # generates an integer between 0 and 6
 # to simulate a roll of die
 def roll_die():
@@ -51,6 +88,21 @@ def int_check(question):
             print(error)
 
 
+# finds the lowest, highest and average score from a list
+def get_stats(stats_list):
+    pass
+
+    # sort the lists.
+    stats_list.sort()
+
+    # find the lowest, highest and average scores...
+    lowest_score = stats_list[0]
+    highest_score = stats_list[-1]
+    average_score = sum(stats_list) / len(stats_list)
+
+    return [lowest_score, highest_score, average_score]
+
+
 # main routine goes here
 
 # initialize user score and computer score
@@ -58,6 +110,21 @@ user_score = 0
 comp_score = 0
 
 num_rounds = 0
+
+# create lists to hold user and computer scores
+user_scores = []
+comp_scores = []
+
+print()
+print("🎲🎲 Roll it 13 🎲🎲")
+
+# loop for testing purposes
+
+want_instructions = yes_no("Do you want to read the instructions?: ")
+
+# checks users enter yes (y) or no (n)
+if want_instructions == "yes":
+    instruction()
 
 target_score = int_check("Enter a target score: ")
 print(target_score)
@@ -107,7 +174,7 @@ while user_score < target_score and comp_score < target_score:
         # points / status
         print()
         if user_pass == "no":
-            roll_again = input("Do you want to roll the dice (type 'no' to pass): ")
+            roll_again = yes_no("Do you want to roll the dice (type 'no' to pass): ")
         else:
             roll_again = "no"
 
@@ -219,9 +286,28 @@ while user_score < target_score and comp_score < target_score:
         comp_score += add_points
         user_score += add_points
 
+    user_scores.append(user_points)
+    comp_scores.append(computer_points)
+
     print()
     print(f"🎲🎲 User: {user_score} points | Computer: {comp_score} points 🎲🎲")
     print()
 
 print()
 print("Your final score is {us}")
+
+# calculate the lowest, highest and average
+# scores and display them.
+
+user_stats = get_stats(user_scores)
+comp_stats = get_stats(comp_scores)
+
+print("📊📊 Game Statistics 📊📊")
+print()
+print(f"User     - Lowest Score: {user_stats[0]}\t "
+      f"Highest Score: {user_stats[1]}\t "
+      f"Average Score: {user_stats[2]}")
+
+print(f"Computer - Lowest Score: {comp_stats[0]}\t "
+      f"Highest Score: {comp_stats[1]}\t "
+      f"Average Score: {comp_stats[2]}")
