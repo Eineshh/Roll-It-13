@@ -4,7 +4,6 @@ import random
 # checks users enter yes (y) or no (n)
 def yes_no(question):
     while True:
-        print()
         response = input(question).lower()
 
         # checks user response, question
@@ -20,7 +19,6 @@ def yes_no(question):
 # Displays instructions to user
 def instruction():
     print('''
-
 ✦✦✦ Instructions ✦✦✦
 
 First off, you choose a scoring objective (e.g. The first player to score 50 points or more). 
@@ -71,11 +69,9 @@ def two_rolls(who):
 # that is more than 13
 def int_check(question):
     while True:
-
         error = "Please enter an integer that is more than 13 or more"
 
         try:
-            print()
             response = int(input(question))
 
             # checks that the number is more than / equal to 13
@@ -90,8 +86,6 @@ def int_check(question):
 
 # finds the lowest, highest and average score from a list
 def get_stats(stats_list):
-    pass
-
     # sort the lists.
     stats_list.sort()
 
@@ -114,22 +108,25 @@ num_rounds = 0
 # create lists to hold user and computer scores
 user_scores = []
 comp_scores = []
+game_history = []
 
+# Program starts here (with a heading)
 print()
 print("🎲🎲 Roll it 13 🎲🎲")
 
-# loop for testing purposes
-
+# Display instructions if user wants to see them.
 want_instructions = yes_no("Do you want to read the instructions?: ")
 
-# checks users enter yes (y) or no (n)
 if want_instructions == "yes":
     instruction()
 
+# Get target score (must be an integer more than 13)
+print()
 target_score = int_check("Enter a target score: ")
 print(target_score)
 print()
 
+# Loop game until there's a winner
 while user_score < target_score and comp_score < target_score:
     # Add one to the number of rounds (for our heading)
     num_rounds += 1
@@ -194,6 +191,7 @@ while user_score < target_score and comp_score < target_score:
                 break
 
             else:
+                print()
                 print(f"You rolled a {user_move} and have a total score of {user_points}.")
 
         else:
@@ -229,14 +227,14 @@ while user_score < target_score and comp_score < target_score:
         print()
         # Tell user is they are winning, loosing or are in a tie
         if user_points > computer_points:
-            result = "🎉🎉🎉 You are ahead! 🎉🎉🎉"
+            result = "🎉🎉 You are ahead! 🎉🎉"
         elif user_points < computer_points:
             result = "😮 The computer is ahead! 😮"
         else:
             result = "It's currently a tie."
 
         print(f"⟡⟡⟡ Round Update ⟡⟡⟡: {result} ")
-        print(f"User Score: {user_points} \t | \t Computer Score: {computer_points}")
+        print(f"User: {user_points} \t | \t Computer: {computer_points}")
 
         # if both user and the computer have passed,
         # we need to exit the loop.
@@ -265,11 +263,17 @@ while user_score < target_score and comp_score < target_score:
         print(f"😻😻 Yay! You won the round and {user_points} points have "
               f"been added to your score 😻😻")
 
+        add_points = user_points
+
     else:
         print(f"◇◇ The result for this round is a tie. You and the computer"
               f"both have {user_points} points. ◇◇")
 
         add_points = user_points
+
+    # Record round result and add it to the game history
+    round_result = f"Round {num_rounds} - User: {user_points} \t Computer: {computer_points}"
+    game_history.append(round_result)
 
     # end of a single round
 
@@ -279,7 +283,7 @@ while user_score < target_score and comp_score < target_score:
 
     # if the user wins, add their points to their score
     elif user_points > computer_points:
-        user_score += user_points
+        user_score += add_points
 
     # if it's a tie, add the point to BOTH SCORES
     else:
@@ -289,12 +293,23 @@ while user_score < target_score and comp_score < target_score:
     user_scores.append(user_points)
     comp_scores.append(computer_points)
 
-    print()
-    print(f"🎲🎲 User: {user_score} points | Computer: {comp_score} points 🎲🎲")
+    # print()
+    # print(f"🎲🎲 User: {user_score} points | Computer: {comp_score} points 🎲🎲")
+    # print()
+
+print(f"Final Scores: User ({user_score}) vs Computer ({comp_score})")
+print()
+
+# Display game history if user wants to see it
+show_history = yes_no("Do you want to see the game history?: ")
+if show_history == "yes":
+    print("\n🎮🎮 Game History 🎮🎮")
     print()
 
-print()
-print("Your final score is {us}")
+    for item in game_history:
+        print(item)
+
+    print()
 
 # calculate the lowest, highest and average
 # scores and display them.
@@ -306,8 +321,8 @@ print("📊📊 Game Statistics 📊📊")
 print()
 print(f"User     - Lowest Score: {user_stats[0]}\t "
       f"Highest Score: {user_stats[1]}\t "
-      f"Average Score: {user_stats[2]}")
+      f"Average Score: {user_stats [2]:.2f}")
 
 print(f"Computer - Lowest Score: {comp_stats[0]}\t "
       f"Highest Score: {comp_stats[1]}\t "
-      f"Average Score: {comp_stats[2]}")
+      f"Average Score: {comp_stats[2]}:.2f")
